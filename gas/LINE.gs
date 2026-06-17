@@ -817,7 +817,8 @@ function createCalendarEventFromPost(body) {
     allDay:      String(body.allDay || 'false'),
     calendarKey: body.calendarKey || '',
     location:    body.location    || '',
-    description: body.description || ''
+    description: body.description || '',
+    colorId:     body.colorId     || ''
   };
   return createCalendarEventFromGet(params);
 }
@@ -838,6 +839,11 @@ function createCalendarEventFromGet(params) {
     var calendarKey = params.calendarKey || '';
     var location    = params.location   || '';
     var description = params.description || '';
+
+    // colorId: GCalの有効値 "1"〜"11" のみ受け付ける。不正値は無視（登録は失敗させない）
+    var colorIdRaw  = params.colorId ? String(params.colorId) : '';
+    var VALID_COLOR_IDS = ['1','2','3','4','5','6','7','8','9','10','11'];
+    var colorId     = (colorIdRaw && VALID_COLOR_IDS.indexOf(colorIdRaw) >= 0) ? colorIdRaw : null;
 
     if (!title)   return jsonOut({ success: false, error: 'title が必要です' });
     if (!dateStr) return jsonOut({ success: false, error: 'date が必要です' });
@@ -866,8 +872,9 @@ function createCalendarEventFromGet(params) {
       description: description
     };
 
+    var createdEvent;
     if (allDay) {
-      cal.createAllDayEvent(title, date, opts);
+      createdEvent = cal.createAllDayEvent(title, date, opts);
     } else {
       // 修正3: startTime は HH:MM 形式必須（空・未定義・不正形式・NaN はエラー）
       var timeRe = /^\d{1,2}:\d{2}$/;
@@ -901,7 +908,34 @@ function createCalendarEventFromGet(params) {
       } else {
         end = new Date(start.getTime() + 60 * 60 * 1000); // デフォルト1時間
       }
-      cal.createEvent(title, start, end, opts);
+      createdEvent = cal.createEvent(title, start, end, opts);
+    }
+
+    // 表示色の設定（colorId が有効な場合のみ。例外で登録自体を失敗させない）
+    if (colorId && createdEvent) {
+      try {
+        // CalendarApp.EventColor の定数名マップ（colorId "1"〜"11" 対応）
+        var COLOR_MAP = {
+          '1':  CalendarApp.EventColor.PALE_BLUE,    // ラベンダー
+          '2':  CalendarApp.EventColor.SAGE,          // セージ
+          '3':  CalendarApp.EventColor.GRAPE,         // グレープ
+          '4':  CalendarApp.EventColor.FLAMINGO,      // フラミンゴ
+          '5':  CalendarApp.EventColor.BANANA,        // バナナ
+          '6':  CalendarApp.EventColor.TANGERINE,     // タンジェリン
+          '7':  CalendarApp.EventColor.PEACOCK,       // ピーコック
+          '8':  CalendarApp.EventColor.GRAPHITE,      // グラファイト
+          '9':  CalendarApp.EventColor.BLUEBERRY,     // ブルーベリー
+          '10': CalendarApp.EventColor.BASIL,         // バジル
+          '11': CalendarApp.EventColor.TOMATO         // トマト
+        };
+        var eventColor = COLOR_MAP[colorId];
+        if (eventColor) {
+          createdEvent.setColor(eventColor);
+        }
+      } catch (colorErr) {
+        // 色設定失敗は無視（登録は成功扱い）
+        console.warn('[createCalendarEventFromGet] setColor 失敗（無視）: ' + colorErr);
+      }
     }
 
     return jsonOut({ success: true, calName: CFG.CAL_NAME[calendarKey] || calendarKey });

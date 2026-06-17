@@ -5,8 +5,8 @@
 
 # ノードモジュール
 node_modules/
-package-lock.json
 yarn.lock
+# package-lock.json は CI(npm ci)で必要なためコミットする
 
 # Electron
 dist/

@@ -91,8 +91,12 @@ function createWindow() {
       _logFn('✅ ウィンドウ準備完了（表示待機中）');
     });
 
-    // ★ すべてのデスクトップ（Mission Control）で表示
-    state.mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    // ★ すべてのデスクトップ（Mission Control / 仮想デスクトップ）で表示
+    if (process.platform === 'darwin') {
+      state.mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    } else {
+      try { state.mainWindow.setVisibleOnAllWorkspaces(true); } catch (e) { /* Win/Linux: 無視 */ }
+    }
     state.mainWindow.on('closed', () => { state.mainWindow = null; });
 
     console.log('✅ createWindow完了');

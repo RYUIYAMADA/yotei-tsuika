@@ -73,6 +73,11 @@ const EXCLUDED_APP_PATTERN = new RegExp(
 );
 
 function startExcludedAppMonitor() {
+  // ★ Windows では osascript が利用できないためスキップ
+  if (process.platform !== 'darwin') {
+    console.log('ℹ️ 除外アプリ監視: Windows非対応のためスキップ');
+    return;
+  }
   if (state.excludedAppCheckTimer) return;
   state.excludedAppCheckTimer = setInterval(() => {
     execFile('osascript', ['-e', 'tell application "System Events" to get name of first process whose frontmost is true'],

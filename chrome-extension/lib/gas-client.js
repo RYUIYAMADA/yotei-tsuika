@@ -30,6 +30,11 @@ export async function createCalendarEvent(eventData, gasWebAppUrl, gasToken) {
   const bodyLimit = Math.max(0, MAX_DESC - urlPrefix.length);
   const descRaw = urlPrefix + descBody.slice(0, bodyLimit);
 
+  // colorId の値域チェック（GCalの有効範囲: "1"〜"11"）
+  // 不正値・未指定の場合は送らない（GAS側でデフォルト色を使用）
+  const VALID_COLOR_IDS = new Set(['1','2','3','4','5','6','7','8','9','10','11']);
+  const colorId = String(eventData.colorId || '');
+
   const payload = {
     action:      'createEvent',
     title:       eventData.title      || '',
@@ -41,6 +46,11 @@ export async function createCalendarEvent(eventData, gasWebAppUrl, gasToken) {
     location:    eventData.location   || '',
     description: descRaw
   };
+
+  // colorId が有効な場合のみ payload に追加
+  if (colorId && VALID_COLOR_IDS.has(colorId)) {
+    payload.colorId = colorId;
+  }
 
   // token が設定されている場合のみ付与（GAS側はfail-closed: token不一致・未設定で必ずunauthorized）
   if (gasToken) payload.token = gasToken;

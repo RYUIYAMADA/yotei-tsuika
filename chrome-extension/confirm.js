@@ -10,6 +10,10 @@
  *   4. 失敗: エラー表示 + 選択テキストを本文欄に入れ手動編集できる状態にする
  */
 
+// ── 色選択の定数（GCalカラーID 1〜11の公式8色） ──
+const COLOR_STORAGE_KEY = 'yotei_selected_color_id';
+const DEFAULT_COLOR_ID  = '7'; // ピーコック青
+
 (async () => {
   const titleEl       = document.getElementById('title');
   const dateEl        = document.getElementById('date');
@@ -21,6 +25,63 @@
   const statusEl      = document.getElementById('status');
   const btnRegister   = document.getElementById('btn-register');
   const btnCancel     = document.getElementById('btn-cancel');
+
+  // ── 色選択 UI の初期化 ──
+  const swatches      = Array.from(document.querySelectorAll('.color-swatch'));
+  const previewBar    = document.getElementById('color-preview-bar');
+  let selectedColorId = DEFAULT_COLOR_ID;
+
+  // 前回の選択色を復元（localStorage）
+  try {
+    const saved = localStorage.getItem(COLOR_STORAGE_KEY);
+    if (saved && swatches.some(s => s.dataset.colorId === saved)) {
+      selectedColorId = saved;
+    }
+  } catch (_) { /* localStorage 使用不可の環境は無視 */ }
+
+  function applyColorSelection(colorId) {
+    selectedColorId = colorId;
+    swatches.forEach((s, idx) => {
+      const isSelected = s.dataset.colorId === colorId;
+      s.setAttribute('aria-checked', String(isSelected));
+      s.tabIndex = isSelected ? 0 : -1;
+    });
+
+    // プレビューバー更新
+    const activeSwatch = swatches.find(s => s.dataset.colorId === colorId);
+    if (activeSwatch) {
+      const hex   = activeSwatch.dataset.colorHex;
+      const label = activeSwatch.title;
+      previewBar.style.borderLeftColor = hex;
+      previewBar.textContent = label;
+      previewBar.classList.add('visible');
+    }
+
+    // 前回選択を保存
+    try { localStorage.setItem(COLOR_STORAGE_KEY, colorId); } catch (_) {}
+  }
+
+  // 初期選択を適用
+  applyColorSelection(selectedColorId);
+
+  // スウォッチ click ハンドラ
+  swatches.forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      applyColorSelection(swatch.dataset.colorId);
+    });
+  });
+
+  // キーボード操作: radiogroup 的に左右矢印で移動
+  document.querySelector('.color-swatches').addEventListener('keydown', (e) => {
+    if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+    const currentIdx = swatches.findIndex(s => s.dataset.colorId === selectedColorId);
+    let nextIdx = e.key === 'ArrowRight'
+      ? (currentIdx + 1) % swatches.length
+      : (currentIdx - 1 + swatches.length) % swatches.length;
+    applyColorSelection(swatches[nextIdx].dataset.colorId);
+    swatches[nextIdx].focus();
+    e.preventDefault();
+  });
 
   // ── 解析中表示（ポップアップは即座に表示済み）──
   statusEl.className   = '';
@@ -90,7 +151,8 @@
       allDay:      !startTimeEl.value,
       location:    locationEl.value.trim(),
       description: descriptionEl.value.trim(),
-      meetUrl:     btnRegister.dataset.meetUrl || null
+      meetUrl:     btnRegister.dataset.meetUrl || null,
+      colorId:     selectedColorId || null
     };
 
     if (!eventData.title) {

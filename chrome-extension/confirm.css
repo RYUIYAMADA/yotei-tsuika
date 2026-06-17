@@ -127,6 +127,60 @@ button {
 }
 #btn-cancel:hover { background: var(--color-border); }
 
+/* ── 色選択スウォッチ ── */
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.1s, border-color 0.1s;
+  outline: none;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.color-swatch:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.color-swatch[aria-checked="true"] {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 1px var(--color-bg);
+}
+
+/* プレビューバー: 選択中の色を左ボーダーとして予定タイトルの雰囲気を再現 */
+.color-preview-bar {
+  margin-top: 6px;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-radius: 2px;
+  font-size: 11px;
+  color: var(--color-text-sub);
+  padding-left: 7px;
+  line-height: 1.4;
+  overflow: hidden;
+  transition: border-color 0.15s, height 0.15s;
+}
+
+.color-preview-bar.visible {
+  height: auto;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
 #status {
   font-size: 12px;
   margin-top: 8px;

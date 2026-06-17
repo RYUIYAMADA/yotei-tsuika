@@ -28,6 +28,21 @@ const HOT_ZONE_HEALTH_CHECK_INTERVAL = 30 * 1000;
 
 // ── ホットゾーンウィンドウ作成 ──────────────────────────────
 
+/** ★ setVisibleOnAllWorkspaces のクロスプラットフォームラッパー */
+function setVisibleOnAllWorkspacesSafe(win, visible) {
+  try {
+    if (process.platform === 'darwin') {
+      win.setVisibleOnAllWorkspaces(visible, { visibleOnFullScreen: true });
+    } else {
+      // Windows/Linux: visibleOnFullScreen オプション非対応・オプションなしで呼ぶ
+      win.setVisibleOnAllWorkspaces(visible);
+    }
+  } catch (e) {
+    // API非対応環境では無視
+    console.log('ℹ️ setVisibleOnAllWorkspaces スキップ: ' + e.message);
+  }
+}
+
 /** ★ ホットゾーン（右端の透明帯、上下に余白あり）
  *
  * ⚠️ 方式: transparent:true + setIgnoreMouseEvents(true, {forward:true})
@@ -86,8 +101,8 @@ function createHotZone() {
     </body></html>
   `);
 
-  // ★ すべてのデスクトップ（Mission Control）で表示
-  state.hotZoneWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  // ★ すべてのデスクトップ（Mission Control / 仮想デスクトップ）で表示
+  setVisibleOnAllWorkspacesSafe(state.hotZoneWindow, true);
   state.hotZoneWindow.showInactive();
 
   state.hotZoneWindow.on('page-title-updated', (e, title) => {
@@ -146,7 +161,7 @@ function repairHotZone() {
 
   state.hotZoneWindow.setBounds(expected);
   state.hotZoneWindow.setAlwaysOnTop(true);
-  state.hotZoneWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  setVisibleOnAllWorkspacesSafe(state.hotZoneWindow, true);
 
   if (!state.isWindowVisible && !state.isAnimating) {
     state.hotZoneWindow.showInactive();
