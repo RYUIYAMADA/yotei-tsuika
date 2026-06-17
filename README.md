@@ -1,10 +1,45 @@
-# 予定追加ツール
+# yotei-tsuika — 予定追加 ＋ タスクバー
 
-**Windows・Mac 両対応。** GitHub Releases からインストーラをダウンロードしてすぐ使えます。
+**このアプリは2つの機能を持ちます。**
 
-テキストを選択するだけで、AI が日時・場所を解析して Google カレンダーに自動登録します。
+| 機能 | 概要 | 対応OS |
+|---|---|---|
+| ① 予定追加ツール | テキスト選択→AI解析→Googleカレンダー自動登録 | Mac / Windows |
+| ② タスクバー | 画面右端でサイドバー表示・今日の予定とタスク一覧 | Mac（Windows開発予定） |
 
-> 🔗 紹介ページ: https://ryuiyamada.github.io/yotei-tsuika-lp/
+---
+
+## ① 予定追加ツール
+
+> 🔗 紹介ページ: https://ryuiyamada.github.io/quick-calendar/
+
+ウェブページや他アプリでテキストを選択するだけで、AI が日時・場所を解析して Google カレンダーに自動登録します。
+
+### 主な機能
+
+- **Chrome 拡張** — テキストを選択すると「＋予定」ボタンが出現。ワンクリックで登録
+- **AI 解析（Gemini）** — 「来週月曜 14時 渋谷で打合せ」のような自然な日本語を自動解釈
+- **確認ポップアップ** — 登録前に日時・場所・タイトルを確認・編集できる
+- **macOS クイックアクション（任意）** — Safari や他アプリでも右クリックから登録可能
+- **LINE 連携（任意）** — LINE の文字列を転送するだけで登録
+
+### スクリーンショット（予定追加ツール）
+
+| テキスト選択 → ボタン表示 | 確認ポップアップ | オンボーディング |
+|---|---|---|
+| ![select](landing-page/assets/select-button.png) | ![confirm](landing-page/assets/confirm.png) | ![onboarding](landing-page/assets/onboarding.png) |
+
+---
+
+## ② タスクバー
+
+> 🔗 紹介ページ: https://ryuiyamada.github.io/task-sidebar/
+
+Mac 画面の右端にマウスを当てると、サイドバーがスライドして表示される常駐アプリです。今日の予定とタスクを一覧できます。Windows 版は開発予定。
+
+### スクリーンショット（タスクバー）
+
+![taskbar](landing-page/assets/taskbar-screenshot.png)
 
 ---
 
@@ -42,24 +77,6 @@
 | macOS クイックアクション（右クリック） | ✅ | — 非対応（Mac 専用機能） |
 | 右端ホットゾーンによるサイドバー自動表示 | ✅ | — 非対応（Mac 専用機能）。タスクトレイアイコンから表示 |
 | 除外アプリ（Lightroom 等）の自動検知 | ✅ | — 非対応（osascript 依存） |
-
----
-
-## 主な機能
-
-- **Chrome 拡張** — ウェブページでテキストを選択すると「＋予定」ボタンが出現。ワンクリックで登録
-- **AI 解析（Gemini）** — 「来週月曜 14時 渋谷で打合せ」のような自然な日本語テキストを自動解釈
-- **確認ポップアップ** — 登録前に日時・場所・タイトルを確認・編集できる
-- **macOS クイックアクション（任意）** — Safari や他アプリでも右クリックから登録可能
-- **LINE 連携（任意）** — LINE の文字列を転送するだけで登録
-
----
-
-## スクリーンショット
-
-| テキスト選択 → ボタン表示 | 確認ポップアップ | オンボーディング |
-|---|---|---|
-| ![select](landing-page/assets/select-button.png) | ![confirm](landing-page/assets/confirm.png) | ![onboarding](landing-page/assets/onboarding.png) |
 
 ---
 
