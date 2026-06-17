@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "tasks-manager 予定追加",
+  "version": "2.6.0",
+  "description": "選択テキストからGoogleカレンダーに予定を登録する（tasks-manager連携）",
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js":      ["content.js"],
+      "run_at":  "document_idle"
+    }
+  ],
+
+  "permissions": ["contextMenus", "storage", "notifications"],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "https://script.google.com/*",
+    "https://script.googleusercontent.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "options_page": "options.html",
+
+  "action": {
+    "default_title": "tasks-manager 設定",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+
+}

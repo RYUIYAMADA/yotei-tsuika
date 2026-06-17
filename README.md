@@ -1,0 +1,56 @@
+# 予定追加ツール
+
+テキストを選択するだけで、AI が日時・場所を解析して Google カレンダーに自動登録します。
+
+> 🔗 紹介ページ: https://ryuiyamada.github.io/yotei-tsuika-lp/
+
+---
+
+## 主な機能
+
+- **Chrome 拡張** — ウェブページでテキストを選択すると「＋予定」ボタンが出現。ワンクリックで登録
+- **AI 解析（Gemini）** — 「来週月曜 14時 渋谷で打合せ」のような自然な日本語テキストを自動解釈
+- **確認ポップアップ** — 登録前に日時・場所・タイトルを確認・編集できる
+- **macOS クイックアクション（任意）** — Safari や他アプリでも右クリックから登録可能
+- **LINE 連携（任意）** — LINE の文字列を転送するだけで登録
+
+---
+
+## スクリーンショット
+
+| テキスト選択 → ボタン表示 | 確認ポップアップ | オンボーディング |
+|---|---|---|
+| ![select](landing-page/assets/select-button.png) | ![confirm](landing-page/assets/confirm.png) | ![onboarding](landing-page/assets/onboarding.png) |
+
+---
+
+## セットアップ
+
+詳細な手順は **[SETUP.md](./SETUP.md)** を参照してください（所要時間：約 5〜10 分）。
+
+---
+
+## 技術構成
+
+| コンポーネント | 技術 |
+|---|---|
+| Chrome 拡張 | Manifest V3（Vanilla JS） |
+| AI 解析バックエンド | Google Apps Script + Gemini API |
+| macOS クイックアクション | Node.js（ESM） |
+| LINE 連携 | Google Apps Script |
+
+各自が自分の Google アカウントで GAS をデプロイして使う方式のため、サーバー費用は不要です。
+
+---
+
+## 免責事項
+
+- 本ツールの利用には Google アカウントおよび Gemini API キー（各自取得）が必要です
+- GAS・Gemini の利用規約・利用制限はそれぞれのサービスに従います
+- カレンダー登録の正確性は AI 解析に依存します。重要な予定は必ず確認してください
+
+---
+
+## ライセンス
+
+MIT License — 詳細は [LICENSE](./LICENSE) を参照

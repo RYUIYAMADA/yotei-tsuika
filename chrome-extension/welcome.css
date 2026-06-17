@@ -1,0 +1,335 @@
+/* welcome.css — onboarding wizard
+   デザイントークンは confirm.css と統一（同一 :root 変数）
+*/
+
+:root {
+  --color-bg:        #ffffff;
+  --color-surface:   #f5f5f5;
+  --color-border:    #e0e0e0;
+  --color-text:      #1a1a1a;
+  --color-text-sub:  #555555;
+  --color-accent:    #1a56db;
+  --color-accent-hv: #1344b8;
+  --color-danger:    #c0392b;
+  --color-success:   #1e8e3e;
+  --radius:          6px;
+  --font:            'Noto Sans JP', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  background: var(--color-bg);
+  padding: 28px 24px 32px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── ヘッダー ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.header svg.logo-icon {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.tagline {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  margin-bottom: 24px;
+  padding-left: 30px;
+}
+
+/* ── ステップ進捗バー ── */
+.step-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.step-bar .step-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  color: var(--color-text-sub);
+  border: 1.5px solid var(--color-border);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.step-bar .step-dot.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.step-bar .step-dot.done {
+  background: var(--color-success);
+  color: #fff;
+  border-color: var(--color-success);
+}
+
+.step-bar .step-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--color-border);
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  padding: 0 2px;
+}
+
+.step-labels span {
+  font-size: 10px;
+  color: var(--color-text-sub);
+  text-align: center;
+  width: 33.3%;
+}
+
+.step-labels span.active {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.step-labels span.done {
+  color: var(--color-success);
+}
+
+/* ── カード ── */
+.card {
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-title svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.card-desc {
+  font-size: 11px;
+  color: var(--color-text-sub);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.hint-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.hint-link:hover { text-decoration: underline; }
+
+/* ── フォーム ── */
+.field {
+  margin-bottom: 12px;
+}
+
+.field:last-child { margin-bottom: 0; }
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-sub);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field-note {
+  font-size: 11px;
+  color: var(--color-text-sub);
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 7px 9px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: var(--color-accent);
+}
+
+.free-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  background: #e8f0fe;
+  color: var(--color-accent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── フィールドエラー ── */
+.field-error {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.hidden { display: none; }
+
+/* ── テスト結果ブロック ── */
+.test-result {
+  font-size: 12px;
+  min-height: 18px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  margin-top: 10px;
+  display: none;
+  line-height: 1.6;
+}
+
+.test-result.show { display: block; }
+.test-result.ok {
+  background: #e6f4ea;
+  color: var(--color-success);
+}
+.test-result.fail {
+  background: #fce8e6;
+  color: var(--color-danger);
+}
+.test-result.pending {
+  background: var(--color-surface);
+  color: var(--color-text-sub);
+}
+
+/* ── ナビゲーションボタン ── */
+.nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 0;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--color-accent-hv); }
+.btn-primary:disabled {
+  background: #9ab3f0;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btn-secondary:hover { background: var(--color-border); }
+
+/* ── ステップ表示制御 ── */
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+
+/* ── 完了画面 ── */
+.complete-icon {
+  width: 48px;
+  height: 48px;
+  stroke: var(--color-success);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.complete-msg {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.complete-msg h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.complete-msg p {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  line-height: 1.7;
+}
+
+.complete-msg .btn-close {
+  margin-top: 20px;
+  width: 100%;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; base-uri 'self';">
+  <title>タスク管理</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="titlebar">
+    <span class="titlebar-version">v4.0</span>
+    <div class="titlebar-buttons">
+      <button id="btn-pin" title="ピン留め">⊕</button>
+      <button id="btn-close" title="閉じる">✕</button>
+    </div>
+  </div>
+
+  <div id="app">
+
+    <!-- 月カレンダー -->
+    <div id="month-calendar-section">
+      <div class="cal-header">
+        <button id="cal-prev" class="cal-nav">‹</button>
+        <span id="cal-month-label"></span>
+        <button id="cal-next" class="cal-nav">›</button>
+        <button id="cal-today-btn" class="cal-today-btn">今日</button>
+      </div>
+      <div class="cal-weekdays">
+        <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span class="sat">土</span><span class="sun">日</span>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+    </div>
+
+    <!-- 今日の予定 -->
+    <div id="schedule-section">
+      <div class="section-header">
+        <h2 id="schedule-date-label">今日の予定</h2>
+        <button id="btn-refresh-calendar" title="更新">↻</button>
+      </div>
+      <div id="calendar-events"></div>
+      <div id="cal-register-bar">
+        <input type="text" id="cal-register-input" placeholder="予定を追加（例: 明日14時 打ち合わせ）" autocomplete="off">
+        <div id="cal-register-status" class="hidden"></div>
+      </div>
+      <div id="cal-confirm-panel" class="hidden">
+        <div class="confirm-header">確認</div>
+        <div class="confirm-body">
+          <div class="confirm-row"><span class="confirm-label">タイトル</span><span id="confirm-title" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">日付</span><span id="confirm-date" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">時間</span><span id="confirm-time" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">場所</span><span id="confirm-location" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">本文</span><span id="confirm-description" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">カレンダー</span><span id="confirm-calendar" class="confirm-value"></span></div>
+          <div class="confirm-row"><span class="confirm-label">解析</span><span id="confirm-engine" class="confirm-value" style="font-size:10px;opacity:0.45;"></span></div>
+        </div>
+        <div class="confirm-actions">
+          <button id="btn-confirm-register" class="confirm-btn confirm-yes">登録</button>
+          <button id="btn-confirm-cancel" class="confirm-btn confirm-no">キャンセル</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- タスク管理 -->
+    <div id="task-section">
+      <div id="quick-task-bar">
+        <input type="text" id="quick-task-input" placeholder="タスクを追加..." autocomplete="off">
+      </div>
+      <div id="task-columns">
+        <div class="task-column" data-priority="today">
+          <div class="column-header today"><span class="priority-dot"></span>今日中</div>
+          <div class="task-drop-zone" data-priority="today"></div>
+        </div>
+        <div class="task-column" data-priority="dev">
+          <div class="column-header dev"><span class="priority-dot"></span>開発検討</div>
+          <div class="task-drop-zone" data-priority="dev"></div>
+        </div>
+        <div class="task-column" data-priority="soon">
+          <div class="column-header soon"><span class="priority-dot"></span>できたら</div>
+          <div class="task-drop-zone" data-priority="soon"></div>
+        </div>
+        <div class="task-column" data-priority="anytime">
+          <div class="column-header anytime"><span class="priority-dot"></span>いつでも</div>
+          <div class="task-drop-zone" data-priority="anytime"></div>
+        </div>
+      </div>
+      <button id="btn-show-summary" class="hidden">本日のまとめ</button>
+    </div>
+
+    <!-- まとめ表示 -->
+    <div id="task-summary" class="hidden">
+      <div class="section-header"><h3>本日のまとめ</h3></div>
+      <div id="summary-content"></div>
+    </div>
+
+  </div>
+  <script type="module" src="renderer.js"></script>
+</body>
+</html>

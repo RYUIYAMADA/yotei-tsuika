@@ -1,0 +1,12 @@
+{
+  "gemini": {
+    "model": "gemini-2.5-flash",
+    "maxOutputTokens": 2000,
+    "timeoutMs": 15000
+  },
+  "ollama": {
+    "url": "http://localhost:11434",
+    "model": "qwen2.5:3b"
+  },
+  "excludedApps": ["Lightroom", "Capture One", "Illustrator"]
+}

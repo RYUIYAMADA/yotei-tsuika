@@ -1,0 +1,3 @@
+# ローカル専用設定（実値入り）— コミット禁止
+config.defaults.local.json
+*preview*.png

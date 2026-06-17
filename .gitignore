@@ -1,0 +1,54 @@
+# 環境変数・秘密情報
+.env
+.env.local
+.env.*.local
+
+# ノードモジュール
+node_modules/
+package-lock.json
+yarn.lock
+
+# Electron
+dist/
+dist_electron/
+*.dmg
+*.exe
+*.app
+
+# キャッシュ・ログ
+.cache/
+*.log
+startup.log
+.startup-check
+calendar-data.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# テスト
+coverage/
+.nyc_output/
+
+# ランタイム生成物・秘密設定
+pending-events.json
+*.broken.*
+tasks/
+gas-config.json
+
+# 再発防止: symlink の node_modules も除外（末尾スラッシュ無し）
+node_modules
+
+# Chrome 拡張のローカル設定（個人設定・シークレット含む可能性）
+chrome-extension/config.defaults.json
+
+# GAS clasp ローカル設定（個人の scriptId を含む）
+gas/.clasp.json
+.clasp.json

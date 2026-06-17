@@ -1,0 +1,6 @@
+{
+  "_comment": "使い方: このファイルを config.defaults.local.json としてコピーし、実値を入れる。local.json は .gitignore 済み。コミットされない。このファイル（example）には実値を書かない。",
+  "geminiApiKey": "YOUR_GEMINI_API_KEY_HERE",
+  "gasWebAppUrl": "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec",
+  "gasToken": "YOUR_GAS_TOKEN_HERE"
+}
